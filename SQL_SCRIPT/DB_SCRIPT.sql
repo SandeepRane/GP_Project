@@ -103,14 +103,7 @@ CREATE TRIGGER [dbo].[tg_project_master]
 		SET FHNumber = 'FHN00'+@CustomerId
 
 		Where FreightHeadID = @CustomerId
-       --INSERT INTO FreightHead(FHNumber)
-       --VALUES('FHN00'+@CustomerId)
-
-		-- TRUNCATE TABLE FreightHead
-
-		-- DROP TABLE FreightHead
-		-- DROP TABLE[dbo].[FreightHeadServices]
-		-- DROP TABLE [dbo].[FreightHeadShipmentRate]
+       
 END;
 GO
 
