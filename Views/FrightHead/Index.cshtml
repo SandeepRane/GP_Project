@@ -1,0 +1,236 @@
+﻿@using GP.Models
+@model GP.Models.FrieghtHeadServiceViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Index", "FrightHead", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="text-center">DATA INSERT</h4>
+        <hr />
+        <div class="container" style="margin:4em;">
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.RequestedByUser, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.RequestedByUser, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RequestedByUser, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.RequestDate, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBox("DateCreated", DateTime.Today, new { @readonly = "readonly", @class = "form-control disabled" })
+                    @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.FreightType, htmlAttributes: new { @class = "col-md-4 control-label" })
+                    @Html.DropDownListFor(m => m.FreightType,
+              new SelectList(Enum.GetValues(typeof(FreightTypeEnum))),
+              "Select FreightType", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.IncoTerm, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.IncoTerm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IncoTerm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.PickUpLocation, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.PickUpLocation, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PickUpLocation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.LoadingPort, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.LoadingPort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LoadingPort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.DischargePort, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DischargePort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DischargePort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.PlaceOfDelivery, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.PlaceOfDelivery, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PlaceOfDelivery, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Commodity, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Commodity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Commodity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.FreightCargoType, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FreightCargoType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightCargoType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.TraderName, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.TraderName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TraderName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Deparment, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Deparment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Deparment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "col-md-4 control-label" })
+                    @Html.DropDownListFor(m => m.Priority,
+              new SelectList(Enum.GetValues(typeof(PriorityEnum))),
+              "Select FreightType", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.FreightHeadStatusID, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FreightHeadStatusID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightHeadStatusID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.FreightContainerType, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FreightContainerType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightContainerType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.NumberOfContainers, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.NumberOfContainers, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfContainers, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.FreightPackingType, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FreightPackingType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightPackingType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.NetWeight, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.NetWeight, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NetWeight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.GrossWeight, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.GrossWeight, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GrossWeight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.FreeTimePeriod, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FreeTimePeriod, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreeTimePeriod, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.BLClauses, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.BLClauses, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BLClauses, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.ShippingCertificate, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ShippingCertificate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShippingCertificate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1em;">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="SUBMIT" class="btn btn-success btn-lg" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

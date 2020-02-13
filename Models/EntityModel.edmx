@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_GPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FreightHead">
+          <Key>
+            <PropertyRef Name="FreightHeadID" />
+          </Key>
+          <Property Name="FreightHeadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FHNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="RequestedByUser" Type="int" Nullable="false" />
+          <Property Name="Company" Type="int" />
+          <Property Name="FreightType" Type="varchar" MaxLength="100" />
+          <Property Name="IncoTerm" Type="varchar" MaxLength="100" />
+          <Property Name="Customer" Type="varchar" MaxLength="100" />
+          <Property Name="PickUpLocation" Type="varchar" MaxLength="100" />
+          <Property Name="LoadingPort" Type="varchar" MaxLength="100" />
+          <Property Name="DischargePort" Type="varchar" MaxLength="100" />
+          <Property Name="PlaceOfDelivery" Type="varchar" MaxLength="100" />
+          <Property Name="Commodity" Type="varchar" MaxLength="100" />
+          <Property Name="FreightCargoType" Type="varchar" MaxLength="100" />
+          <Property Name="TraderName" Type="varchar" MaxLength="100" />
+          <Property Name="Deparment" Type="varchar" MaxLength="100" />
+          <Property Name="Priority" Type="varchar" MaxLength="50" />
+          <Property Name="FreightHeadStatusID" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FreightHeadServices">
+          <Key>
+            <PropertyRef Name="FreightHeadServicesID" />
+          </Key>
+          <Property Name="FreightHeadServicesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FreightHeadID" Type="int" Nullable="false" />
+          <Property Name="FreightContainerType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NumberOfContainers" Type="int" Nullable="false" />
+          <Property Name="FreightPackingType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NetWeight" Type="float" Nullable="false" />
+          <Property Name="GrossWeight" Type="float" Nullable="false" />
+          <Property Name="FreeTimePeriod" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BLClauses" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShippingCertificate" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Remarks" Type="varchar" MaxLength="100" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FreightHeadShipmentRate">
+          <Key>
+            <PropertyRef Name="FreightHeadShipmentRateID" />
+          </Key>
+          <Property Name="FreightHeadShipmentRateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FreightHeadID" Type="int" Nullable="false" />
+          <Property Name="FreightHeadShipmentTypeID" Type="int" Nullable="false" />
+          <Property Name="FreightContainerType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FreightPackingType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RateOfferedToTraders" Type="float" Nullable="false" />
+          <Property Name="RateOfferedByShippingLine" Type="float" />
+          <Property Name="TotalAmoutToTraders" Type="float" Nullable="false" />
+          <Property Name="TotalAmountOfShippingLine" Type="float" />
+          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FreightHeadServices_FreightHead">
+          <End Role="FreightHead" Type="Self.FreightHead" Multiplicity="1" />
+          <End Role="FreightHeadServices" Type="Self.FreightHeadServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FreightHead">
+              <PropertyRef Name="FreightHeadID" />
+            </Principal>
+            <Dependent Role="FreightHeadServices">
+              <PropertyRef Name="FreightHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreightHeadShipmentRate_FreightHead">
+          <End Role="FreightHead" Type="Self.FreightHead" Multiplicity="1" />
+          <End Role="FreightHeadShipmentRate" Type="Self.FreightHeadShipmentRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FreightHead">
+              <PropertyRef Name="FreightHeadID" />
+            </Principal>
+            <Dependent Role="FreightHeadShipmentRate">
+              <PropertyRef Name="FreightHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_GPModelStoreContainer">
+          <EntitySet Name="FreightHead" EntityType="Self.FreightHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FreightHeadServices" EntityType="Self.FreightHeadServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FreightHeadShipmentRate" EntityType="Self.FreightHeadShipmentRate" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FreightHeadServices_FreightHead" Association="Self.FK_FreightHeadServices_FreightHead">
+            <End Role="FreightHead" EntitySet="FreightHead" />
+            <End Role="FreightHeadServices" EntitySet="FreightHeadServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreightHeadShipmentRate_FreightHead" Association="Self.FK_FreightHeadShipmentRate_FreightHead">
+            <End Role="FreightHead" EntitySet="FreightHead" />
+            <End Role="FreightHeadShipmentRate" EntitySet="FreightHeadShipmentRate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_GPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FreightHead">
+          <Key>
+            <PropertyRef Name="FreightHeadID" />
+          </Key>
+          <Property Name="FreightHeadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FHNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="RequestedByUser" Type="Int32" Nullable="false" />
+          <Property Name="Company" Type="Int32" />
+          <Property Name="FreightType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncoTerm" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Customer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PickUpLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LoadingPort" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DischargePort" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceOfDelivery" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Commodity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FreightCargoType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TraderName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Deparment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Priority" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FreightHeadStatusID" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="FreightHeadServices" Relationship="Self.FK_FreightHeadServices_FreightHead" FromRole="FreightHead" ToRole="FreightHeadServices" />
+          <NavigationProperty Name="FreightHeadShipmentRates" Relationship="Self.FK_FreightHeadShipmentRate_FreightHead" FromRole="FreightHead" ToRole="FreightHeadShipmentRate" />
+        </EntityType>
+        <EntityType Name="FreightHeadService">
+          <Key>
+            <PropertyRef Name="FreightHeadServicesID" />
+          </Key>
+          <Property Name="FreightHeadServicesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FreightHeadID" Type="Int32" Nullable="false" />
+          <Property Name="FreightContainerType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumberOfContainers" Type="Int32" Nullable="false" />
+          <Property Name="FreightPackingType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NetWeight" Type="Double" Nullable="false" />
+          <Property Name="GrossWeight" Type="Double" Nullable="false" />
+          <Property Name="FreeTimePeriod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BLClauses" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShippingCertificate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FreightHead" Relationship="Self.FK_FreightHeadServices_FreightHead" FromRole="FreightHeadServices" ToRole="FreightHead" />
+        </EntityType>
+        <EntityType Name="FreightHeadShipmentRate">
+          <Key>
+            <PropertyRef Name="FreightHeadShipmentRateID" />
+          </Key>
+          <Property Name="FreightHeadShipmentRateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FreightHeadID" Type="Int32" Nullable="false" />
+          <Property Name="FreightHeadShipmentTypeID" Type="Int32" Nullable="false" />
+          <Property Name="FreightContainerType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FreightPackingType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RateOfferedToTraders" Type="Double" Nullable="false" />
+          <Property Name="RateOfferedByShippingLine" Type="Double" />
+          <Property Name="TotalAmoutToTraders" Type="Double" Nullable="false" />
+          <Property Name="TotalAmountOfShippingLine" Type="Double" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FreightHead" Relationship="Self.FK_FreightHeadShipmentRate_FreightHead" FromRole="FreightHeadShipmentRate" ToRole="FreightHead" />
+        </EntityType>
+        <Association Name="FK_FreightHeadServices_FreightHead">
+          <End Role="FreightHead" Type="Self.FreightHead" Multiplicity="1" />
+          <End Role="FreightHeadServices" Type="Self.FreightHeadService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FreightHead">
+              <PropertyRef Name="FreightHeadID" />
+            </Principal>
+            <Dependent Role="FreightHeadServices">
+              <PropertyRef Name="FreightHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreightHeadShipmentRate_FreightHead">
+          <End Role="FreightHead" Type="Self.FreightHead" Multiplicity="1" />
+          <End Role="FreightHeadShipmentRate" Type="Self.FreightHeadShipmentRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FreightHead">
+              <PropertyRef Name="FreightHeadID" />
+            </Principal>
+            <Dependent Role="FreightHeadShipmentRate">
+              <PropertyRef Name="FreightHeadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_GPEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FreightHeads" EntityType="Self.FreightHead" />
+          <EntitySet Name="FreightHeadServices" EntityType="Self.FreightHeadService" />
+          <EntitySet Name="FreightHeadShipmentRates" EntityType="Self.FreightHeadShipmentRate" />
+          <AssociationSet Name="FK_FreightHeadServices_FreightHead" Association="Self.FK_FreightHeadServices_FreightHead">
+            <End Role="FreightHead" EntitySet="FreightHeads" />
+            <End Role="FreightHeadServices" EntitySet="FreightHeadServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreightHeadShipmentRate_FreightHead" Association="Self.FK_FreightHeadShipmentRate_FreightHead">
+            <End Role="FreightHead" EntitySet="FreightHeads" />
+            <End Role="FreightHeadShipmentRate" EntitySet="FreightHeadShipmentRates" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_GPModelStoreContainer" CdmEntityContainer="DB_GPEntities1">
+          <EntitySetMapping Name="FreightHeads">
+            <EntityTypeMapping TypeName="DB_GPModel.FreightHead">
+              <MappingFragment StoreEntitySet="FreightHead">
+                <ScalarProperty Name="FreightHeadID" ColumnName="FreightHeadID" />
+                <ScalarProperty Name="FHNumber" ColumnName="FHNumber" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestedByUser" ColumnName="RequestedByUser" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="FreightType" ColumnName="FreightType" />
+                <ScalarProperty Name="IncoTerm" ColumnName="IncoTerm" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="PickUpLocation" ColumnName="PickUpLocation" />
+                <ScalarProperty Name="LoadingPort" ColumnName="LoadingPort" />
+                <ScalarProperty Name="DischargePort" ColumnName="DischargePort" />
+                <ScalarProperty Name="PlaceOfDelivery" ColumnName="PlaceOfDelivery" />
+                <ScalarProperty Name="Commodity" ColumnName="Commodity" />
+                <ScalarProperty Name="FreightCargoType" ColumnName="FreightCargoType" />
+                <ScalarProperty Name="TraderName" ColumnName="TraderName" />
+                <ScalarProperty Name="Deparment" ColumnName="Deparment" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="FreightHeadStatusID" ColumnName="FreightHeadStatusID" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FreightHeadServices">
+            <EntityTypeMapping TypeName="DB_GPModel.FreightHeadService">
+              <MappingFragment StoreEntitySet="FreightHeadServices">
+                <ScalarProperty Name="FreightHeadServicesID" ColumnName="FreightHeadServicesID" />
+                <ScalarProperty Name="FreightHeadID" ColumnName="FreightHeadID" />
+                <ScalarProperty Name="FreightContainerType" ColumnName="FreightContainerType" />
+                <ScalarProperty Name="NumberOfContainers" ColumnName="NumberOfContainers" />
+                <ScalarProperty Name="FreightPackingType" ColumnName="FreightPackingType" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="FreeTimePeriod" ColumnName="FreeTimePeriod" />
+                <ScalarProperty Name="BLClauses" ColumnName="BLClauses" />
+                <ScalarProperty Name="ShippingCertificate" ColumnName="ShippingCertificate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FreightHeadShipmentRates">
+            <EntityTypeMapping TypeName="DB_GPModel.FreightHeadShipmentRate">
+              <MappingFragment StoreEntitySet="FreightHeadShipmentRate">
+                <ScalarProperty Name="FreightHeadShipmentRateID" ColumnName="FreightHeadShipmentRateID" />
+                <ScalarProperty Name="FreightHeadID" ColumnName="FreightHeadID" />
+                <ScalarProperty Name="FreightHeadShipmentTypeID" ColumnName="FreightHeadShipmentTypeID" />
+                <ScalarProperty Name="FreightContainerType" ColumnName="FreightContainerType" />
+                <ScalarProperty Name="FreightPackingType" ColumnName="FreightPackingType" />
+                <ScalarProperty Name="RateOfferedToTraders" ColumnName="RateOfferedToTraders" />
+                <ScalarProperty Name="RateOfferedByShippingLine" ColumnName="RateOfferedByShippingLine" />
+                <ScalarProperty Name="TotalAmoutToTraders" ColumnName="TotalAmoutToTraders" />
+                <ScalarProperty Name="TotalAmountOfShippingLine" ColumnName="TotalAmountOfShippingLine" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
